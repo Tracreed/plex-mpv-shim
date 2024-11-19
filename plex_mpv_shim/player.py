@@ -252,7 +252,7 @@ class PlayerManager(object):
         # Fires at the end.
         @self._player.property_observer("playback-abort")
         def handle_end_idle(_name, value):
-            if self._media_item and value:
+            if self._media_item and value and not self._media_item.parent.has_next:
                 has_lock = self._finished_lock.acquire(False)
                 self.put_task(self.finished_callback, has_lock)
 

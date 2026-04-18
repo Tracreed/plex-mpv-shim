@@ -30,6 +30,16 @@ def main():
     settings.load(conf_file)
     settings.add_listener(update_gdm_settings)
     
+    log_level_mapping = {
+        "debug": logging.DEBUG,
+        "info": logging.INFO,
+        "warning": logging.WARNING,
+        "error": logging.ERROR,
+        "critical": logging.CRITICAL
+    }
+    app_log_level = log_level_mapping.get(settings.app_log_level.lower(), logging.INFO)
+    logging.getLogger().setLevel(app_log_level)
+    
     if sys.platform.startswith("darwin"):
         multiprocessing.set_start_method('forkserver')
 
